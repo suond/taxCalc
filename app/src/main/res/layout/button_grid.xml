@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:layout_gravity="center">
+
+    <Button
+        android:id="@+id/BtnClear"
+        android:text="@string/numBtnClear"
+        android:layout_column="3"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn7"
+        android:text="@string/numBtn7"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn8"
+        android:text="@string/numBtn8"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn9"
+        android:text="@string/numBtn9"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnDiv"
+        android:text="@string/numBtnDiv"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn4"
+        android:text="@string/numBtn4"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn5"
+        android:text="@string/numBtn5"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn6"
+        android:text="@string/numBtn6"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnMul"
+        android:text="@string/numBtnMul"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn1"
+        android:text="@string/numBtn1"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn2"
+        android:text="@string/numBtn2"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn3"
+        android:text="@string/numBtn3"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnSub"
+        android:text="@string/numBtnSub"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/Btn0"
+        android:text="@string/numBtn0"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnDec"
+        android:text="@string/numBtnDec"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnPlus"
+        android:text="@string/numBtnPlus"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/BtnEqual"
+        android:text="@string/numBtnEq"
+        android:textAlignment="center"
+        android:textSize="16sp" />
+</GridLayout>

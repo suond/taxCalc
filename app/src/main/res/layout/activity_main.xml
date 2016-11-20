@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.highsky.taxcalc.MainActivity"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/image_view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/daiana"
+        tools:ignore="ContentDescription"
+        android:scaleType="fitXY"
+        android:alpha="0.5" />
+
+    <TextView
+        android:id="@+id/equation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:layout_alignParentRight="true"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/subTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:layout_alignParentRight="true"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_below="@id/equation" />
+
+    <TextView
+        android:id="@+id/amountTax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:layout_alignParentRight="true"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_below="@id/subTotal" />
+
+    <TextView
+        android:paddingTop="16dp"
+        android:id="@+id/sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sum here"
+        android:layout_below="@id/amountTax"
+        android:layout_alignParentRight="true"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <fragment
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.highsky.taxcalc.GridButtonFragment"
+        tools:layout="@layout/button_grid"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
