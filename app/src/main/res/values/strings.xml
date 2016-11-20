@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TaxCalc</string>
+    <string name="numBtn1">1</string>
+    <string name="numBtn2">2</string>
+    <string name="numBtn3">3</string>
+    <string name="numBtn4">4</string>
+    <string name="numBtn5">5</string>
+    <string name="numBtn6">6</string>
+    <string name="numBtn7">7</string>
+    <string name="numBtn8">8</string>
+    <string name="numBtn9">9</string>
+    <string name="numBtn0">0</string>
+    <string name="numBtnPlus">+</string>
+    <string name="numBtnSub">-</string>
+    <string name="numBtnMul">*</string>
+    <string name="numBtnDiv">/</string>
+    <string name="numBtnEq">=</string>
+    <string name="numBtnDec">.</string>
+    <string name="numBtnClear">C</string>
+    <string name="tax_rate">Tax Rate</string>
+</resources>
