@@ -3,4 +3,6 @@
     <item
         android:id="@+id/menu_item_tax"
         android:title="@string/tax_rate" />
+    <item android:id="@+id/tip15"
+        android:title="@string/tip15"/>
 </menu>
