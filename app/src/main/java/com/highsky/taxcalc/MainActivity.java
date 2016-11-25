@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.icu.text.DecimalFormat;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -31,13 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean decimalClicked = false;
     boolean operatorClicked = false;
     String lastOperator = "blank";
+    double valueUsed = 0;
     double tax = 0;
     boolean equalPressed = false;
     double addedFromTax = 0;
     double subtotal = 0;
     //DecimalFormat df = new DecimalFormat(".##");
     //df.setRoundingMode(HALF_UP);
-
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +79,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDiv.setOnClickListener(this);
         Button btnEq = (Button) findViewById(R.id.BtnEqual);
         btnEq.setOnClickListener(this);
+
         setEquation("0");
         setSubTotal(0);
         setAmountFromTaxed(0);
         SharedPreferences pref = getPreferences(MODE_PRIVATE);
         tax = pref.getFloat("tax", 0);
 
-        //add listeners for +-*/
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.click);
     }
 
     private void setEquation(String set) {
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setTotal(String set) {
         TextView textView = (TextView) findViewById(R.id.sum);
-        textView.setText(set);
+        textView.setText(MessageFormat.format("Total: {0}",set));
     }
 
     private void reset() {
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lastOperator = operator;
             currentValue.setLength(0);
             setEquation(operator);
-            setTotal(Double.toString(subtotal));
+            setTotal("$"+Double.toString(subtotal));
             return;
         }
             /*
@@ -166,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addedFromTax = (subtotal * tax);
             setAmountFromTaxed(addedFromTax);
             setEquation(operator);
-            setTotal(Double.toString(subtotal));
+            setTotal("$"+Double.toString(subtotal));
             currentValue.setLength(0);
             lastOperator = operator;
             decimalClicked = false;
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addedFromTax = (subtotal * tax);
             setAmountFromTaxed(addedFromTax);
             setEquation(operator);
-            setTotal(Double.toString(subtotal));
+            setTotal("$"+Double.toString(subtotal));
             currentValue.setLength(0);
             lastOperator = operator;
             decimalClicked = false;
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             addedFromTax = (subtotal * tax);
             setAmountFromTaxed(addedFromTax);
             setEquation(operator);
-            setTotal(Double.toString(subtotal));
+            setTotal("$"+Double.toString(subtotal));
             currentValue.setLength(0);
             lastOperator = operator;
             decimalClicked = false;
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 addedFromTax = (subtotal * tax);
                 setAmountFromTaxed(addedFromTax);
                 setEquation(operator);
-                setTotal(Double.toString(subtotal));
+                setTotal("$"+Double.toString(subtotal));
                 currentValue.setLength(0);
                 lastOperator = operator;
                 decimalClicked = false;
@@ -265,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Button b = (Button) view;
+        mp.start();
         switch (view.getId()) {
             case R.id.Btn0:
                 if (equalPressed) {
@@ -476,6 +480,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.BtnClear:
                 reset();
                 break;
+
             case R.id.BtnPlus:
                 if (!operatorClicked) {
                     if (currentValue.length() == 0)
@@ -523,46 +528,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //Toast.makeText(this,item.getItemId()+" clicked", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.menu_item_tax) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            final EditText edittext = new EditText(this);
+            edittext.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+            alert.setMessage("Enter in the tax rate (no negative)");
+            alert.setTitle("Tax Rate");
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final EditText edittext = new EditText(this);
-        edittext.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-        alert.setMessage("Enter in the tax rate (no negative)");
-        alert.setTitle("Tax Rate");
+            alert.setView(edittext);
 
-        alert.setView(edittext);
+            alert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //What ever you want to do with the value
+                    //Editable YouEditTextValue = edittext.getText();
+                    //OR
+                    String YouEditTextValue = edittext.getText().toString();
 
-        alert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //What ever you want to do with the value
-                //Editable YouEditTextValue = edittext.getText();
-                //OR
-                String YouEditTextValue = edittext.getText().toString();
+                    if (!isNumeric(YouEditTextValue) || YouEditTextValue.isEmpty()) {
+                        Toast.makeText(MainActivity.this, "Not even a number dude", Toast.LENGTH_SHORT).show();
+                    } else if (Double.parseDouble(YouEditTextValue) < 0) {
+                        Toast.makeText(MainActivity.this, "Tax rates can't be negative dummy", Toast.LENGTH_SHORT).show();
+                    } else {
+                        tax = Double.parseDouble(YouEditTextValue);
+                        SharedPreferences pref = getPreferences(MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putFloat("tax", (float) tax);
+                        editor.apply();
 
-                if (!isNumeric(YouEditTextValue) || YouEditTextValue.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Not even a number dude", Toast.LENGTH_SHORT).show();
-                } else if (Double.parseDouble(YouEditTextValue) < 0) {
-                    Toast.makeText(MainActivity.this, "Tax rates can't be negative dummy", Toast.LENGTH_SHORT).show();
-                } else {
-                    tax = Double.parseDouble(YouEditTextValue);
-                    SharedPreferences pref = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putFloat("tax", (float) tax);
-                    editor.apply();
-
+                    }
                 }
-            }
-        });
+            });
 
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // what ever you want to do with No option.
-                Toast.makeText(MainActivity.this, "Current rate is " + String.format(Locale.US, "%.2f", tax), Toast.LENGTH_SHORT).show();
-            }
-        });
+            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    // what ever you want to do with No option.
+                    Toast.makeText(MainActivity.this, "Current rate is " + String.format(Locale.US, "%.2f", tax), Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        alert.show();
-
+            alert.show();
+        }else if (item.getItemId() == R.id.tip15) {
+            double tip = total*0.15;
+            String fmt = String.format(Locale.US, "%.2f", tip);
+            Toast.makeText(this,"Amount you should tip is: "+fmt,Toast.LENGTH_SHORT).show();
+        }
         return super.onOptionsItemSelected(item);
     }
 
